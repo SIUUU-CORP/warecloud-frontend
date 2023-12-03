@@ -5,6 +5,10 @@ import {
   AccountStep,
 } from './module-elements'
 import { ButtonSection, HeaderSection } from './sections'
+import axios, { AxiosError } from 'axios'
+import { RegisterResponseInterface, ShowToastInterface } from './interface'
+import { useToast } from '@chakra-ui/react'
+import { useRouter } from 'next/router'
 
 export const RegisterModule: React.FC = () => {
   const [activeStep, setActiveStep] = useState<number>(0)
@@ -15,6 +19,8 @@ export const RegisterModule: React.FC = () => {
   const [name, setName] = useState<string>('')
   const [address, setAddress] = useState<string>('')
   const [phoneNumber, setPhoneNumber] = useState<string>('')
+  const toast = useToast()
+  const router = useRouter()
 
   const onNext = () => {
     if (activeStep === 0) {
@@ -22,7 +28,7 @@ export const RegisterModule: React.FC = () => {
     } else if (activeStep === 1) {
       setActiveStep(2)
     } else if (activeStep === 2) {
-      // handle register
+      register()
     }
   }
 
@@ -54,10 +60,49 @@ export const RegisterModule: React.FC = () => {
     return false
   }
 
+  const showToast = ({ status, title }: ShowToastInterface) =>
+    toast({
+      status,
+      title,
+      duration: 5000,
+      isClosable: true,
+      position: 'top',
+    })
+
+  const register = async () => {
+    try {
+      const data = {
+        email,
+        password,
+        name,
+        phoneNumber,
+        address,
+        role: selectedRole === 0 ? 'Customer' : 'Vendor',
+      }
+
+      await axios({
+        method: 'POST',
+        url: 'http://localhost:3001/auth/register',
+        data,
+      })
+
+      showToast({ title: 'Successfully registered!', status: 'success' })
+      router.push('/')
+    } catch (e) {
+      if (e instanceof AxiosError) {
+        const { responseMessage }: RegisterResponseInterface = e.response?.data
+        showToast({ title: responseMessage, status: 'error' })
+      } else {
+        showToast({ title: 'Something went wrong', status: 'error' })
+      }
+    }
+  }
+
   return (
     <div className="flex justify-center items-center min-h-screen">
       <div className="flex flex-col items-center gap-3 p-10 shadow-lg w-[550px]">
         <HeaderSection activeStep={activeStep} />
+        {/* TODO: Refactor?? */}
         {activeStep === 0 ? (
           <AccountStep
             onEmailChange={(event) => setEmail(event.target.value)}
