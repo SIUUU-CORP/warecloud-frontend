@@ -74,7 +74,7 @@ export const RegisterModule: React.FC = () => {
 
       await axios({
         method: 'POST',
-        url: 'http://localhost:3001/auth/register',
+        url: `${process.env.NEXT_PUBLIC_APP_API_URL}/auth/register`,
         data,
       })
 

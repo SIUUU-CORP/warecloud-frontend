@@ -5,12 +5,15 @@ import axios, { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { BaseResponseInterface } from 'src/components/contexts/AuthContext/interface'
+import { LoginResponseInterface } from './interface'
+import { useAuthContext } from '@contexts'
 
 export const LoginModule: React.FC = () => {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const router = useRouter()
   const toast = useToast()
+  const { setUser } = useAuthContext()
 
   const login = async () => {
     try {
@@ -19,22 +22,21 @@ export const LoginModule: React.FC = () => {
         password,
       }
 
-      await axios({
+      const response = await axios({
         method: 'POST',
-        url: 'http://localhost:3001/auth/login',
+        url: `${process.env.NEXT_PUBLIC_APP_API_URL}/auth/login`,
         data,
       })
 
+      const { user, token }: LoginResponseInterface = response?.data
+      setUser(user)
+      localStorage.setItem('Access Token', token)
       showToast({ title: 'Successfully login!', status: 'success', toast })
-      console.log('here')
       router.push('/')
     } catch (e) {
       if (e instanceof AxiosError) {
         const { responseCode }: BaseResponseInterface = e.response?.data
-        console.log(e)
-        console.log(responseCode)
         if (responseCode === 404) {
-          console.log('hmmm')
           showToast({
             title: 'You are not registered yet',
             status: 'error',
@@ -49,7 +51,6 @@ export const LoginModule: React.FC = () => {
         } else {
           showToast({ title: 'Something went wrong', status: 'error', toast })
         }
-        console.log('first')
       } else {
         showToast({ title: 'Something went wrong', status: 'error', toast })
       }
