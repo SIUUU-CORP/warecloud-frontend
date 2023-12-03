@@ -13,3 +13,9 @@ export interface UserInterface {
   name: string
   email: string
 }
+
+export interface BaseResponseInterface {
+  responseCode: number
+  responseMessage: string
+  responseStatus: string
+}
