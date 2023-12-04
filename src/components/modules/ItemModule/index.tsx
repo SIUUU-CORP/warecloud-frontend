@@ -10,7 +10,7 @@ import { ItemInterface } from 'src/components/elements/ItemCard/interface'
 import { PaginationSection } from './sections/PaginationSection'
 import { Loader } from './module-elements/Loader'
 
-export const HomeModule: React.FC = () => {
+export const ItemModule: React.FC = () => {
   const DEBOUNCE_DELAY = 500
   const [search, setSearch] = useState<string>('')
   const debouncedSearch = useDebounce(search, DEBOUNCE_DELAY)
@@ -57,7 +57,7 @@ export const HomeModule: React.FC = () => {
 
   return (
     <>
-      <section className="max-w-[1440px] flex flex-col mx-auto items-center py-2 min-h-screen">
+      <section className="max-w-[1440px] flex flex-col mx-auto items-center py-8 min-h-screen">
         <SearchBar search={search} setSearch={setSearch} />
 
         <div className="pt-8 flex flex-wrap gap-5 justify-center">
