@@ -5,6 +5,5 @@ export interface CustomInputInterface {
   label?: string
   onChange: React.ChangeEventHandler<HTMLInputElement>
   value: string
-  className?: string
   children?: ReactNode
 }

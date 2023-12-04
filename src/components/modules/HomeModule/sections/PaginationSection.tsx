@@ -14,12 +14,13 @@ export const PaginationSection: React.FC<PaginationProps> = ({
       </button>
     )}
 
-    <div className="flex flex-row gap-1 items-center w-full">
-      <CustomInput
-        onChange={(event) => handlePageChange(event.target.value)}
-        value={currentPage.toString()}
-        className="w-11"
-      />
+    <div className="flex flex-row gap-1 items-center">
+      <div className='w-11'>
+        <CustomInput
+          onChange={(event) => handlePageChange(event.target.value)}
+          value={currentPage.toString()}
+        />
+      </div>
       <p className="text-2xl font-light">{`/ ${pagination?.pages ?? 1}`}</p>
     </div>
 
