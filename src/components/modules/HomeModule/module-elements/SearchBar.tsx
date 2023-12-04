@@ -1,0 +1,18 @@
+import { InputLeftElement } from '@chakra-ui/react'
+import { CustomInput } from '@elements'
+import { AiOutlineSearch } from 'react-icons/ai'
+import { SearchBarProps } from '../interface'
+
+export const SearchBar: React.FC<SearchBarProps> = ({ search, setSearch }) => (
+  <div className="w-[50%]">
+    <CustomInput
+      placeholder="Cari di Warecloud"
+      onChange={(event) => setSearch(event.target.value)}
+      value={search}
+    >
+      <InputLeftElement>
+        <AiOutlineSearch className="text-teal-600 w-6 h-6" />
+      </InputLeftElement>
+    </CustomInput>
+  </div>
+)
