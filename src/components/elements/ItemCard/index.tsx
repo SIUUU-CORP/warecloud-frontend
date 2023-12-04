@@ -1,6 +1,6 @@
 import React from 'react'
 import { ItemCardProps } from './interface'
-import { AiOutlineShopping } from "react-icons/ai"
+import { AiOutlineShopping } from 'react-icons/ai'
 import Link from 'next/link'
 
 export const ItemCard: React.FC<ItemCardProps> = ({ item }) => {
@@ -21,7 +21,7 @@ export const ItemCard: React.FC<ItemCardProps> = ({ item }) => {
           <p className="text-white">{formattedPrice}</p>
 
           <div className="pt-3">
-            <AiOutlineShopping className='text-white w-8 h-8' />
+            <AiOutlineShopping className="text-white w-8 h-8" />
           </div>
         </div>
       </div>

@@ -15,7 +15,7 @@ export const PaginationSection: React.FC<PaginationProps> = ({
     )}
 
     <div className="flex flex-row gap-1 items-center">
-      <div className='w-11'>
+      <div className="w-11">
         <CustomInput
           onChange={(event) => handlePageChange(event.target.value)}
           value={currentPage.toString()}
