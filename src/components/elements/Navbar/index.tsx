@@ -57,9 +57,9 @@ const Navbar: React.FC = () => {
           title="Home"
           className="mx-2 text-teal-600 text-xl"
         />
-        <CustomLink 
-          href='/item'
-          title='Item'
+        <CustomLink
+          href="/item"
+          title="Item"
           className="mx-2 text-teal-600 text-xl"
         />
         <CustomLink
