@@ -30,7 +30,7 @@ const Navbar: React.FC = () => {
           className="mx-2 text-teal-600 text-xl"
         />
         <CustomLink
-          href="/login"
+          href="/order"
           title="Order"
           className="mx-2 text-teal-600 text-xl"
         />

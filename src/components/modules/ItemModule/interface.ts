@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from 'react'
 import { BaseResponseInterface } from 'src/components/contexts/AuthContext/interface'
 import { ItemInterface } from 'src/components/elements/ItemCard/interface'
+import { PaginationInterface } from 'src/components/elements/Pagination/interface'
 
 export interface SearchBarProps {
   search: string
@@ -10,16 +11,4 @@ export interface SearchBarProps {
 export interface GetItemsResponseInterface extends BaseResponseInterface {
   items: ItemInterface[]
   pagination: PaginationInterface
-}
-
-export interface PaginationInterface {
-  pages: number
-  hasPrev: boolean
-  hasNext: boolean
-}
-
-export interface PaginationProps {
-  currentPage: number
-  handlePageChange: (value: string) => void
-  pagination?: PaginationInterface
 }
