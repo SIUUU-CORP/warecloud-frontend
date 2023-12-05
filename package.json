@@ -12,7 +12,8 @@
     "check-lint": "eslint . --ext ts --ext tsx --ext js",
     "format": "prettier --write .",
     "test-all": "yarn format && yarn check-format && yarn check-lint && yarn check-types",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "gg": "stride generate element pagination"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.8.2",

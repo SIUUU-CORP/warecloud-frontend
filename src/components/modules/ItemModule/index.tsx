@@ -5,10 +5,11 @@ import { showToast } from '@utils'
 import { useEffect, useState } from 'react'
 import { useDebounce } from 'usehooks-ts'
 import axios from 'axios'
-import { GetItemsResponseInterface, PaginationInterface } from './interface'
+import { GetItemsResponseInterface } from './interface'
 import { ItemInterface } from 'src/components/elements/ItemCard/interface'
-import { PaginationSection } from './sections/PaginationSection'
+import { Pagination } from '@elements'
 import { Loader } from './module-elements/Loader'
+import { PaginationInterface } from 'src/components/elements/Pagination/interface'
 
 export const ItemModule: React.FC = () => {
   const DEBOUNCE_DELAY = 500
@@ -31,6 +32,7 @@ export const ItemModule: React.FC = () => {
       })
 
       const { items, pagination }: GetItemsResponseInterface = response?.data
+
       setItems(items)
       setPagination(pagination)
       setIsLoading(false)
@@ -41,7 +43,7 @@ export const ItemModule: React.FC = () => {
 
   const handlePageChange = (value: string) => {
     let page = parseInt(value)
-    if (page > (pagination?.pages ?? 1)) {
+    if (page > (pagination?.records ?? 1)) {
       return
     }
 
@@ -70,8 +72,8 @@ export const ItemModule: React.FC = () => {
           )}
         </div>
 
-        {pagination && pagination.pages !== 0 && (
-          <PaginationSection
+        {pagination && pagination.records !== 0 && (
+          <Pagination
             currentPage={currentPage}
             handlePageChange={handlePageChange}
             pagination={pagination}
