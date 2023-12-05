@@ -1,5 +1,5 @@
 import { UserInterface } from 'src/components/contexts/AuthContext/interface'
-import { PaginationInterface } from '../ItemModule/interface'
+import { PaginationInterface } from 'src/components/elements/Pagination/interface'
 
 export enum OrderStatus {
   PENDING = 'PENDING',
