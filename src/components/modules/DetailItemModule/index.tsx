@@ -59,16 +59,16 @@ export const DetailItemModule: React.FC = () => {
 
   return (
     <>
-      <section className="max-w-[450px] flex flex-col mx-auto py-5 h-fit">
-        <div className="outline outline-2 outline-teal-600 px-8 py-6 flex flex-col gap-4">
+      <section className="w-[87%] md:w-[400px] lg:w-[450px] flex flex-col mx-auto py-5 h-fit">
+        <div className="outline outline-2 outline-teal-600 px-5 md:px-7 lg:px-8 py-5 md:py-6 flex flex-col gap-3 md:gap-4 rounded-md">
           <Link href={'/item'} className="w-fit h-fit group">
-            <BsArrowLeftSquare className="text-teal-600 w-8 h-8 group-hover:text-teal-400 duration-150 ease-in-out" />
+            <BsArrowLeftSquare className="text-teal-600 w-7 lg:w-8 h-7 lg:h-8 group-hover:text-teal-400 duration-150 ease-in-out" />
           </Link>
 
           {item ? (
             <>
-              <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-1">
+              <div className="flex flex-col gap-2 lg:gap-3">
+                <div className="flex flex-col md:gap-1">
                   <p className="text-center font-bold text-xl text-teal-600">
                     {item.name}
                   </p>
@@ -79,7 +79,7 @@ export const DetailItemModule: React.FC = () => {
                 {detailItemList.map(
                   ({ label, value }) =>
                     value && (
-                      <div className="flex flex-col gap-1">
+                      <div className="flex flex-col md:gap-1">
                         <p className="font-semibold">{label}</p>
                         <p>{value}</p>
                       </div>

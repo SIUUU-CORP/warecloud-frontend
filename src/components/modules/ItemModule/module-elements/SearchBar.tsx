@@ -4,7 +4,7 @@ import { AiOutlineSearch } from 'react-icons/ai'
 import { SearchBarProps } from '../interface'
 
 export const SearchBar: React.FC<SearchBarProps> = ({ search, setSearch }) => (
-  <div className="w-[50%]">
+  <div className="w-[80%] md:w-[75%] lg::w-[60%] xl:w-[50%]">
     <CustomInput
       placeholder="Search on Warecloud"
       onChange={(event) => setSearch(event.target.value)}
