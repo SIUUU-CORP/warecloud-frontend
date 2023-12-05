@@ -6,7 +6,7 @@ import { SearchBarProps } from '../interface'
 export const SearchBar: React.FC<SearchBarProps> = ({ search, setSearch }) => (
   <div className="w-[50%]">
     <CustomInput
-      placeholder="Cari di Warecloud"
+      placeholder="Search on Warecloud"
       onChange={(event) => setSearch(event.target.value)}
       value={search}
     >

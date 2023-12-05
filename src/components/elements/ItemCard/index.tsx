@@ -14,7 +14,7 @@ export const ItemCard: React.FC<ItemCardProps> = ({ item }) => {
 
   return (
     <Link href={`/${vendorNamePath}/${id}`}>
-      <div className="w-64 bg-teal-600 rounded-lg hover:-translate-y-1.5 duration-300 ease-in-out">
+      <div className="w-64 bg-teal-600 rounded-lg hover:-translate-y-1.5 duration-200 ease-in-out">
         <div className="px-6 py-5 flex flex-col gap-1">
           <p className="text-white font-bold text-lg">{name}</p>
           <p className="text-white font-semibold">{user.name}</p>

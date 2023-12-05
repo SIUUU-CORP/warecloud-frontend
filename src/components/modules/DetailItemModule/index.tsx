@@ -53,11 +53,15 @@ export const DetailItemModule: React.FC = () => {
     stock: item?.stock as number,
   })
 
+  const handleOrderButton = () => {
+    console.log('adas')
+  }
+
   return (
     <>
       <section className="max-w-[450px] flex flex-col mx-auto py-5 h-fit">
         <div className="outline outline-2 outline-teal-600 px-8 py-6 flex flex-col gap-4">
-          <Link href={'/'} className="w-fit h-fit group">
+          <Link href={'/item'} className="w-fit h-fit group">
             <BsArrowLeftSquare className="text-teal-600 w-8 h-8 group-hover:text-teal-400 duration-150 ease-in-out" />
           </Link>
 
@@ -88,8 +92,9 @@ export const DetailItemModule: React.FC = () => {
                 }
                 colorScheme="teal"
                 isDisabled={item?.stock === 0}
+                onClick={handleOrderButton}
               >
-                Pesan
+                Order
               </Button>
             </>
           ) : (
