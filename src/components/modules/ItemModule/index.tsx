@@ -66,7 +66,7 @@ export const ItemModule: React.FC = () => {
           {isLoading ? (
             <Loader />
           ) : items.length === 0 ? (
-            <p>Barang yang Anda cari tidak tersedia di Warecloud</p>
+            <p>The item you are looking for is not available on Warecloud</p>
           ) : (
             items.map((item) => <ItemCard item={item} key={item.id} />)
           )}
