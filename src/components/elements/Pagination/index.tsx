@@ -1,15 +1,17 @@
+import React from 'react'
+
 import { CustomInput } from '@elements'
 import { BsArrowLeftSquare } from 'react-icons/bs'
-import { PaginationProps } from '../interface'
+import { PaginationProps } from './interface'
 
-export const PaginationSection: React.FC<PaginationProps> = ({
+export const Pagination: React.FC<PaginationProps> = ({
   currentPage,
   handlePageChange,
   pagination,
 }) => (
   <div className="pt-10 flex flex-row gap-3">
     {(pagination?.hasPrev ?? false) && (
-      <button>
+      <button onClick={() => handlePageChange((currentPage - 1).toString())}>
         <BsArrowLeftSquare className="text-teal-600 w-8 h-8" />
       </button>
     )}
@@ -25,7 +27,7 @@ export const PaginationSection: React.FC<PaginationProps> = ({
     </div>
 
     {(pagination?.hasNext ?? false) && (
-      <button>
+      <button onClick={() => handlePageChange((currentPage + 1).toString())}>
         <BsArrowLeftSquare className="text-teal-600 w-8 h-8 rotate-180" />
       </button>
     )}
