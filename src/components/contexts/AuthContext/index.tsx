@@ -9,8 +9,9 @@ import {
   AuthContextProviderProps,
   AuthContextInterface,
   UserInterface,
+  BaseResponseInterface,
 } from './interface'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import { showToast } from '@utils'
 import { useToast } from '@chakra-ui/react'
 
@@ -43,8 +44,31 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
       const { user } = response.data
       setUser(user)
     } catch (error) {
-      localStorage.removeItem('Access Token')
-      showToast({ title: 'Token expired', status: 'error', toast })
+      if (error instanceof AxiosError) {
+        const { responseCode }: BaseResponseInterface = error.response?.data
+        if (responseCode === 401) {
+          localStorage.removeItem('Access Token')
+          showToast({
+            title: 'Your session has expired',
+            status: 'error',
+            toast,
+            description: 'Please kindly login',
+          })
+        } else {
+          showToast({
+            title: 'Something went wrong',
+            status: 'error',
+            toast,
+            description: 'Kindly contact help desk.',
+          })
+        }
+        showToast({
+          title: 'Something went wrong',
+          status: 'error',
+          toast,
+          description: 'Kindly contact help desk.',
+        })
+      }
     }
   }
 
