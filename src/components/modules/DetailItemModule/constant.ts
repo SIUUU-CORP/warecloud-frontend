@@ -8,15 +8,15 @@ export const getDetailItemList = ({
 }: GetDetailItemListProps) => {
   return [
     {
-      label: 'Deskripsi:',
+      label: 'Description:',
       value: description,
     },
     {
-      label: 'Harga:',
+      label: 'Price:',
       value: price,
     },
     {
-      label: 'Berat:',
+      label: 'Weight:',
       value: weight,
     },
     {

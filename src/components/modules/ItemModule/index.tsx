@@ -18,13 +18,14 @@ export const ItemModule: React.FC = () => {
   const toast = useToast()
   const [items, setItems] = useState<ItemInterface[]>([])
   const [currentPage, setCurrentPage] = useState<number>(1)
+  const debouncedPage = useDebounce(currentPage, DEBOUNCE_DELAY)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [pagination, setPagination] = useState<PaginationInterface>()
 
   const getAllItems = async () => {
     try {
-      const page = currentPage === 0 ? 1 : currentPage
       setIsLoading(true)
+      const page = currentPage === 0 ? 1 : currentPage
 
       const response = await axios({
         method: 'GET',
@@ -55,18 +56,22 @@ export const ItemModule: React.FC = () => {
 
   useEffect(() => {
     getAllItems()
-  }, [debouncedSearch, currentPage])
+  }, [debouncedSearch, debouncedPage])
 
   return (
     <>
-      <section className="max-w-[1440px] flex flex-col mx-auto items-center py-8 min-h-screen">
+      <section
+        className={`max-w-[1440px] flex flex-col mx-auto items-center py-8 ${
+          !isLoading && items.length === 0 && 'min-h-screen'
+        }`}
+      >
         <SearchBar search={search} setSearch={setSearch} />
 
         <div className="pt-8 flex flex-wrap gap-5 justify-center">
           {isLoading ? (
             <Loader />
           ) : items.length === 0 ? (
-            <p>Barang yang Anda cari tidak tersedia di Warecloud</p>
+            <p>The item you are looking for is not available on Warecloud</p>
           ) : (
             items.map((item) => <ItemCard item={item} key={item.id} />)
           )}
