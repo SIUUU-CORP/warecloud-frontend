@@ -8,6 +8,7 @@ import { BsArrowLeftSquare } from 'react-icons/bs'
 import { ItemInterface } from 'src/components/elements/ItemCard/interface'
 import {
   DetailItemInterface,
+  DetailItemModuleProps,
   GetDetailItemResponseInterface,
 } from './interface'
 import { LoginModal, Skeleton } from '@elements'
@@ -16,14 +17,14 @@ import { getDetailItemList } from './constant'
 import { useAuthContext } from '@contexts'
 import { OrderModal } from './sections/OrderModal'
 
-export const DetailItemModule: React.FC = () => {
+export const DetailItemModule: React.FC<DetailItemModuleProps> = ({ item }) => {
   const {
     query: { itemId },
   } = useRouter()
   const { user } = useAuthContext()
   const router = useRouter()
   const toast = useToast()
-  const [item, setItem] = useState<ItemInterface>()
+  const [currentItem, setCurrentItem] = useState<ItemInterface>(item)
   const [showLoginModal, setShowLoginModal] = useState<boolean>(false)
   const [showOrderModal, setShowOrderModal] = useState<boolean>(false)
   const [orderSuccess, setOrderSuccess] = useState<boolean>(false)
@@ -36,7 +37,7 @@ export const DetailItemModule: React.FC = () => {
       })
 
       const { item }: GetDetailItemResponseInterface = response?.data
-      setItem(item)
+      setCurrentItem(item)
     } catch (error) {
       showToast({ title: 'Item not available', status: 'error', toast })
       router.push('/')
@@ -47,12 +48,12 @@ export const DetailItemModule: React.FC = () => {
     getDetailitem()
   }, [orderSuccess])
 
-  const formattedPrice = getCurrency({ price: item?.price as number })
+  const formattedPrice = getCurrency({ price: currentItem?.price as number })
 
   const detailItemList: DetailItemInterface[] = getDetailItemList({
-    description: item?.description as string,
+    description: currentItem?.description as string,
     price: formattedPrice,
-    weight: item?.weight as number,
+    weight: currentItem?.weight as number,
   })
 
   const handleLoginModal = () => setShowLoginModal(!showLoginModal)
@@ -70,15 +71,15 @@ export const DetailItemModule: React.FC = () => {
             <BsArrowLeftSquare className="text-teal-600 w-7 lg:w-8 h-7 lg:h-8 group-hover:text-teal-400 duration-150 ease-in-out" />
           </Link>
 
-          {item ? (
+          {currentItem ? (
             <>
               <div className="flex flex-col gap-2 lg:gap-3">
                 <div className="flex flex-col md:gap-1">
                   <p className="text-center font-bold text-xl text-teal-600">
-                    {item.name}
+                    {currentItem.name}
                   </p>
                   <p className="text-center font-semibold text-lg text-teal-600">
-                    {item.user.name}
+                    {currentItem.user.name}
                   </p>
                 </div>
                 {detailItemList.map(
@@ -93,18 +94,18 @@ export const DetailItemModule: React.FC = () => {
               </div>
               <Button
                 leftIcon={
-                  item.stock > 0 ? (
+                  currentItem.stock > 0 ? (
                     <AiOutlineShoppingCart className="text-white w-5 h-5" />
                   ) : (
                     <></>
                   )
                 }
                 colorScheme="teal"
-                isDisabled={item?.stock === 0}
+                isDisabled={currentItem?.stock === 0}
                 onClick={handleOrderButton}
               >
-                {item.stock === 0
-                  ? 'Item out of stock'
+                {currentItem.stock === 0
+                  ? 'currentItem out of stock'
                   : user?.role === 'CUSTOMER'
                     ? 'Order'
                     : 'Request'}
@@ -122,7 +123,7 @@ export const DetailItemModule: React.FC = () => {
       <OrderModal
         isOpen={showOrderModal}
         setIsOpen={setShowOrderModal}
-        item={item as ItemInterface}
+        item={currentItem as ItemInterface}
         orderSuccess={orderSuccess}
         setOrderSuccess={setOrderSuccess}
       />

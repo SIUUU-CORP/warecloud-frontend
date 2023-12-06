@@ -2,6 +2,10 @@ import { SetStateAction } from 'react'
 import { BaseResponseInterface } from 'src/components/contexts/AuthContext/interface'
 import { ItemInterface } from 'src/components/elements/ItemCard/interface'
 
+export interface DetailItemModuleProps {
+  item: ItemInterface
+}
+
 export interface GetDetailItemResponseInterface extends BaseResponseInterface {
   item: ItemInterface
 }
