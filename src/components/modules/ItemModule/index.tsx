@@ -18,7 +18,6 @@ export const ItemModule: React.FC = () => {
   const toast = useToast()
   const [items, setItems] = useState<ItemInterface[]>([])
   const [currentPage, setCurrentPage] = useState<number>(1)
-  const debouncedPage = useDebounce(currentPage, DEBOUNCE_DELAY)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [pagination, setPagination] = useState<PaginationInterface>()
 
@@ -48,23 +47,17 @@ export const ItemModule: React.FC = () => {
       return
     }
 
-    if (Number.isNaN(page)) {
-      page = 0
-    }
+    if (Number.isNaN(page)) page = 0
     setCurrentPage(page)
   }
 
   useEffect(() => {
     getAllItems()
-  }, [debouncedSearch, debouncedPage])
+  }, [debouncedSearch, currentPage])
 
   return (
     <>
-      <section
-        className={`max-w-[1440px] flex flex-col mx-auto items-center py-8 ${
-          !isLoading && items.length === 0 && 'min-h-screen'
-        }`}
-      >
+      <section className="max-w-[1440px] flex flex-col mx-auto items-center py-8 min-h-screen">
         <SearchBar search={search} setSearch={setSearch} />
 
         <div className="pt-8 flex flex-wrap gap-5 justify-center">

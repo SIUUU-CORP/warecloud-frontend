@@ -2,15 +2,13 @@ import React from 'react'
 import { ItemCardProps } from './interface'
 import { AiOutlineShopping } from 'react-icons/ai'
 import Link from 'next/link'
+import { getCurrency } from '@utils'
 
 export const ItemCard: React.FC<ItemCardProps> = ({ item }) => {
   const { id, name, price, user } = item
   const lowerCasedName = user.name.toLowerCase()
   const vendorNamePath = lowerCasedName.replaceAll(' ', '-')
-  const formattedPrice = Intl.NumberFormat('id-ID', {
-    style: 'currency',
-    currency: 'IDR',
-  }).format(price)
+  const formattedPrice = getCurrency({ price: price })
 
   return (
     <Link href={`/${vendorNamePath}/${id}`}>
