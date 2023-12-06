@@ -59,13 +59,13 @@ export const OrderSection: React.FC = () => {
   return (
     <>
       <ModalHeader className="text-center">
-        {user?.role === 'CUSTOMER' ? 'ORDER' : 'REQUEST'}
+        <p className='font-bold'>{user?.role === 'CUSTOMER' ? 'ORDER' : 'REQUEST'}</p>
       </ModalHeader>
       <ModalBody className="flex flex-col gap-3">
         <div className="flex flex-col gap-1 w-full">
           <p>Amount</p>
           <div className="flex flex-row gap-2 items-center">
-            <div className="w-[25%]">
+            <div className="w-[37%] md:w-[25%]">
               <CustomInput
                 onChange={(event) => handleAmountInput(event.target.value)}
                 value={amount}

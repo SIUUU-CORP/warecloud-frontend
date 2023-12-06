@@ -135,7 +135,7 @@ export const DetailSection: React.FC = () => {
             }`}
           />
         </button>
-        <p className="text-center">{`${
+        <p className="text-center font-bold">{`${
           user?.role === 'CUSTOMER' ? 'ORDER' : 'REQUEST'
         } DETAILS`}</p>
       </ModalHeader>
