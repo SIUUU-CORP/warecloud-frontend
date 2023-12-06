@@ -1,5 +1,6 @@
 import React from 'react'
 import { OrderProps } from '../interface'
+import { getCurrency } from '@utils'
 
 export const OrderDetail: React.FC<{
   order: OrderProps
@@ -8,10 +9,7 @@ export const OrderDetail: React.FC<{
 }> = ({ order, onAccept, onReject }) => {
   const { id, createdAt, item, amount, cost, orderStatus, user } = order
 
-  const formattedCost = Intl.NumberFormat('id-ID', {
-    style: 'currency',
-    currency: 'IDR',
-  }).format(cost as number)
+  const formattedCost = getCurrency({ price: cost as number })
 
   return (
     <div className="bg-teal-50 shadow-xl scale-95 hover:scale-105 transition ease-linear rounded-md p-4 mb-4">

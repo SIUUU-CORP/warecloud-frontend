@@ -23,8 +23,8 @@ export const ItemModule: React.FC = () => {
 
   const getAllItems = async () => {
     try {
-      const page = currentPage === 0 ? 1 : currentPage
       setIsLoading(true)
+      const page = currentPage === 0 ? 1 : currentPage
 
       const response = await axios({
         method: 'GET',
@@ -47,9 +47,7 @@ export const ItemModule: React.FC = () => {
       return
     }
 
-    if (Number.isNaN(page)) {
-      page = 0
-    }
+    if (Number.isNaN(page)) page = 0
     setCurrentPage(page)
   }
 
@@ -66,7 +64,7 @@ export const ItemModule: React.FC = () => {
           {isLoading ? (
             <Loader />
           ) : items.length === 0 ? (
-            <p>Barang yang Anda cari tidak tersedia di Warecloud</p>
+            <p>The item you are looking for is not available on Warecloud</p>
           ) : (
             items.map((item) => <ItemCard item={item} key={item.id} />)
           )}
