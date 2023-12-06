@@ -49,7 +49,7 @@ export const OrderModule: React.FC = () => {
       const responseData: OrderProps = response?.data
 
       showToast({
-        title: 'Successfully update statu',
+        title: 'Successfully update status',
         status: 'success',
         toast,
       })
