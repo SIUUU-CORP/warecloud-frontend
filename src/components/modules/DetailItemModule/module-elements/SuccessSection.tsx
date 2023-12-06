@@ -12,7 +12,10 @@ export const SuccessSection: React.FC = () => {
   return (
     <>
       <ModalHeader className="flex justify-center">
-        <Image src="/order-successful.png" boxSize={width < 1024? '225px' : '250px'} />
+        <Image
+          src="/order-successful.png"
+          boxSize={width < 1024 ? '225px' : '250px'}
+        />
       </ModalHeader>
       <ModalFooter>
         <Button colorScheme="teal" onClick={handleModal} className="w-full">

@@ -59,7 +59,9 @@ export const OrderSection: React.FC = () => {
   return (
     <>
       <ModalHeader className="text-center">
-        <p className='font-bold'>{user?.role === 'CUSTOMER' ? 'ORDER' : 'REQUEST'}</p>
+        <p className="font-bold">
+          {user?.role === 'CUSTOMER' ? 'ORDER' : 'REQUEST'}
+        </p>
       </ModalHeader>
       <ModalBody className="flex flex-col gap-3">
         <div className="flex flex-col gap-1 w-full">

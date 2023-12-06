@@ -15,7 +15,11 @@ export const ModalSection = () => {
   const { width } = useWindowSize()
 
   return (
-    <Modal isOpen={isOpen} onClose={handleModal} size={width < 768 ? 'xs' : 'md'}>
+    <Modal
+      isOpen={isOpen}
+      onClose={handleModal}
+      size={width < 768 ? 'xs' : 'md'}
+    >
       <ModalOverlay />
       <ModalContent className="py-1">
         <ModalCloseButton />
