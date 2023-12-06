@@ -14,16 +14,16 @@ export const getItemProps: GetServerSideProps = async (context) => {
 
   if (!item) {
     return {
-      notFound: true
+      notFound: true,
     }
   }
 
   const lowerCasedName = item.user.name.toLowerCase()
   const vendorNamePath = lowerCasedName.replaceAll(' ', '-')
-  
+
   if (vendorName !== vendorNamePath) {
     return {
-      notFound: true
+      notFound: true,
     }
   }
 
