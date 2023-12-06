@@ -1,3 +1,4 @@
+import { SetStateAction } from 'react'
 import { BaseResponseInterface } from 'src/components/contexts/AuthContext/interface'
 import { ItemInterface } from 'src/components/elements/ItemCard/interface'
 
@@ -6,6 +7,7 @@ export interface GetDetailItemResponseInterface extends BaseResponseInterface {
 }
 
 export interface DetailItemInterface {
+  key: string
   label: string
   value: string | number
 }
@@ -14,5 +16,21 @@ export interface GetDetailItemListProps {
   description: string
   price: string
   weight: number
-  stock: number
+}
+
+export interface OrderModalProps {
+  isOpen: boolean
+  setIsOpen: (value: SetStateAction<boolean>) => void
+  item: ItemInterface
+  orderSuccess: boolean
+  setOrderSuccess: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export interface GetOrderDetailsProps {
+  itemName: string
+  vendorName: string
+  amount: string
+  subtotal: string
+  shippingCost: string
+  totalPurchase: string
 }

@@ -1,5 +1,5 @@
 import { Button, useToast } from '@chakra-ui/react'
-import { showToast } from '@utils'
+import { getCurrency, showToast } from '@utils'
 import axios from 'axios'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -14,6 +14,7 @@ import { LoginModal, Skeleton } from '@elements'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
 import { getDetailItemList } from './constant'
 import { useAuthContext } from '@contexts'
+import { OrderModal } from './sections/OrderModal'
 
 export const DetailItemModule: React.FC = () => {
   const {
@@ -24,6 +25,8 @@ export const DetailItemModule: React.FC = () => {
   const toast = useToast()
   const [item, setItem] = useState<ItemInterface>()
   const [showLoginModal, setShowLoginModal] = useState<boolean>(false)
+  const [showOrderModal, setShowOrderModal] = useState<boolean>(false)
+  const [orderSuccess, setOrderSuccess] = useState<boolean>(false)
 
   const getDetailitem = async () => {
     try {
@@ -35,38 +38,33 @@ export const DetailItemModule: React.FC = () => {
       const { item }: GetDetailItemResponseInterface = response?.data
       setItem(item)
     } catch (error) {
-      showToast({ title: 'Item tidak tersedia', status: 'error', toast })
+      showToast({ title: 'Item not available', status: 'error', toast })
       router.push('/')
     }
   }
 
   useEffect(() => {
     getDetailitem()
-  }, [])
+  }, [orderSuccess])
 
-  const formattedPrice = Intl.NumberFormat('id-ID', {
-    style: 'currency',
-    currency: 'IDR',
-  }).format(item?.price as number)
+  const formattedPrice = getCurrency({ price: item?.price as number })
 
   const detailItemList: DetailItemInterface[] = getDetailItemList({
     description: item?.description as string,
     price: formattedPrice,
     weight: item?.weight as number,
-    stock: item?.stock as number,
   })
-
-  const handleOrderButton = () => {
-    if (!user) {
-      handleLoginModal()
-    }
-  }
 
   const handleLoginModal = () => setShowLoginModal(!showLoginModal)
 
+  const handleOrderButton = () => {
+    if (!user) handleLoginModal()
+    else setShowOrderModal(true)
+  }
+
   return (
     <>
-      <section className="w-[87%] md:w-[400px] lg:w-[450px] flex flex-col mx-auto py-5 h-fit">
+      <section className="w-[87%] md:w-[400px] lg:w-[450px] flex flex-col mx-auto py-10 min-h-screen">
         <div className="outline outline-2 outline-teal-600 px-5 md:px-7 lg:px-8 py-5 md:py-6 flex flex-col gap-3 md:gap-4 rounded-md">
           <Link href={'/item'} className="w-fit h-fit group">
             <BsArrowLeftSquare className="text-teal-600 w-7 lg:w-8 h-7 lg:h-8 group-hover:text-teal-400 duration-150 ease-in-out" />
@@ -95,13 +93,21 @@ export const DetailItemModule: React.FC = () => {
               </div>
               <Button
                 leftIcon={
-                  <AiOutlineShoppingCart className="text-white w-5 h-5" />
+                  item.stock > 0 ? (
+                    <AiOutlineShoppingCart className="text-white w-5 h-5" />
+                  ) : (
+                    <></>
+                  )
                 }
                 colorScheme="teal"
                 isDisabled={item?.stock === 0}
                 onClick={handleOrderButton}
               >
-                Order
+                {item.stock === 0
+                  ? 'Item out of stock'
+                  : user?.role === 'CUSTOMER'
+                    ? 'Order'
+                    : 'Request'}
               </Button>
             </>
           ) : (
@@ -113,6 +119,13 @@ export const DetailItemModule: React.FC = () => {
       </section>
 
       <LoginModal isOpen={showLoginModal} onClose={handleLoginModal} />
+      <OrderModal
+        isOpen={showOrderModal}
+        setIsOpen={setShowOrderModal}
+        item={item as ItemInterface}
+        orderSuccess={orderSuccess}
+        setOrderSuccess={setOrderSuccess}
+      />
     </>
   )
 }
