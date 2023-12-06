@@ -56,10 +56,6 @@ export const ItemModule: React.FC = () => {
 
   useEffect(() => {
     getAllItems()
-
-    if (!isLoading && items.length === 0) {
-      setCurrentPage(0)
-    }
   }, [debouncedSearch, debouncedPage])
 
   return (

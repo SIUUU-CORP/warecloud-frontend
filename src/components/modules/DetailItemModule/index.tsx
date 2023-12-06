@@ -10,17 +10,20 @@ import {
   DetailItemInterface,
   GetDetailItemResponseInterface,
 } from './interface'
-import { Skeleton } from '@elements'
+import { LoginModal, Skeleton } from '@elements'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
 import { getDetailItemList } from './constant'
+import { useAuthContext } from '@contexts'
 
 export const DetailItemModule: React.FC = () => {
   const {
     query: { itemId },
   } = useRouter()
+  const { user } = useAuthContext()
   const router = useRouter()
   const toast = useToast()
   const [item, setItem] = useState<ItemInterface>()
+  const [showLoginModal, setShowLoginModal] = useState<boolean>(false)
 
   const getDetailitem = async () => {
     try {
@@ -54,8 +57,12 @@ export const DetailItemModule: React.FC = () => {
   })
 
   const handleOrderButton = () => {
-    console.log('adas')
+    if (!user) {
+      handleLoginModal()
+    }
   }
+
+  const handleLoginModal = () => setShowLoginModal(!showLoginModal)
 
   return (
     <>
@@ -104,6 +111,8 @@ export const DetailItemModule: React.FC = () => {
           )}
         </div>
       </section>
+
+      <LoginModal isOpen={showLoginModal} onClose={handleLoginModal} />
     </>
   )
 }
