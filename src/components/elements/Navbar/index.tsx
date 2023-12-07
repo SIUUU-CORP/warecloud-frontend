@@ -29,13 +29,16 @@ const Navbar: React.FC = () => {
           title="Item"
           className="mx-2 text-teal-600 text-xl"
         />
+        {user?.role === 'VENDOR' && (
+          <CustomLink
+            href="/manage-item"
+            title="Management"
+            className="mx-2 text-teal-600 text-xl"
+          />
+        )}
+
         <CustomLink
-          href="/order"
-          title="Order"
-          className="mx-2 text-teal-600 text-xl"
-        />
-        <CustomLink
-          href="/register"
+          href="/profile"
           title="Profile"
           className="mx-2 text-teal-600 text-xl"
         />
