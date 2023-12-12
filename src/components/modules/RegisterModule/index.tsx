@@ -47,7 +47,8 @@ export const RegisterModule: React.FC = () => {
       (email === '' ||
         password === '' ||
         confirmPassword === '' ||
-        password !== confirmPassword)
+        password !== confirmPassword ||
+        password.length < 8)
     ) {
       return true
     } else if (activeStep === 1 && selectedRole === -1) {
