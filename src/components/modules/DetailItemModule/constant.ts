@@ -1,27 +1,68 @@
-import { DetailItemInterface, GetDetailItemListProps } from './interface'
+import {
+  DetailItemInterface,
+  GetOrderDetailsProps,
+  GetDetailItemListProps,
+} from './interface'
+
+export const SHIPPING_RATE = 10000
 
 export const getDetailItemList = ({
   description,
   price,
   weight,
-  stock,
 }: GetDetailItemListProps) => {
   return [
     {
-      label: 'Deskripsi:',
+      key: 'description',
+      label: 'Description:',
       value: description,
     },
     {
-      label: 'Harga:',
+      key: 'price',
+      label: 'Price:',
       value: price,
     },
     {
-      label: 'Berat:',
+      key: 'weight',
+      label: 'Weight:',
       value: weight,
     },
+  ] as DetailItemInterface[]
+}
+
+export const getOrderDetailsList = ({
+  itemName,
+  vendorName,
+  amount,
+  subtotal,
+  shippingCost,
+  totalPurchase,
+}: GetOrderDetailsProps) => {
+  return [
     {
-      label: 'Stock:',
-      value: stock,
+      key: 'itemName',
+      label: 'Item name:',
+      value: itemName,
+    },
+    {
+      key: 'vendorName',
+      label: 'Vendor name:',
+      value: vendorName,
+    },
+    {
+      key: 'subtotal',
+      label: `Total price (${amount} ${amount === '1' ? 'item' : 'items'}):`,
+      value: subtotal,
+    },
+    {
+      key: 'shippingCost',
+      label: 'Shipping cost:',
+      value: shippingCost,
+    },
+    {
+      key: 'totalPurchase',
+      label: 'Total',
+      value: totalPurchase,
     },
   ] as DetailItemInterface[]
 }

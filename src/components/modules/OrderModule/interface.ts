@@ -1,4 +1,7 @@
-import { UserInterface } from 'src/components/contexts/AuthContext/interface'
+import {
+  BaseResponseInterface,
+  UserInterface,
+} from 'src/components/contexts/AuthContext/interface'
 import { PaginationInterface } from 'src/components/elements/Pagination/interface'
 
 export enum OrderStatus {
@@ -11,6 +14,10 @@ export enum OrderStatus {
 export interface GetOrdersProps {
   orders: OrderProps[]
   pagination: PaginationInterface
+}
+
+export interface UpdateOrderProps extends BaseResponseInterface {
+  order: OrderProps
 }
 
 export interface OrderProps {

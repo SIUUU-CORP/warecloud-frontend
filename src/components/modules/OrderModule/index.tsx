@@ -2,11 +2,11 @@ import { useToast } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { showToast } from '@utils'
 import axios, { AxiosError } from 'axios'
-import { GetOrdersProps, OrderProps } from './interface'
-import { OrderDetail } from './sections/OrderDetail'
+import { GetOrdersProps, OrderProps, UpdateOrderProps } from './interface'
 import { BaseResponseInterface } from 'src/components/contexts/AuthContext/interface'
 import { PaginationInterface } from 'src/components/elements/Pagination/interface'
 import { Pagination } from '@elements'
+import OrderTable from './sections/OrderTable'
 
 export const OrderModule: React.FC = () => {
   const [orders, setOrders] = useState<OrderProps[]>([])
@@ -14,11 +14,11 @@ export const OrderModule: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1)
   const toast = useToast()
 
-  const handleAccept = (order: OrderProps) => {
+  const handleAccept = async (order: OrderProps) => {
     updateStatusOrder(order.id, 1)
   }
 
-  const handleReject = (order: OrderProps) => {
+  const handleReject = async (order: OrderProps) => {
     updateStatusOrder(order.id, 0)
   }
 
@@ -46,21 +46,19 @@ export const OrderModule: React.FC = () => {
         },
       })
 
-      const responseData: OrderProps = response?.data
+      const { order }: UpdateOrderProps = response?.data
 
       showToast({
-        title: 'Successfully update statu',
+        title: 'Successfully update status',
         status: 'success',
         toast,
       })
-      const updatedOrders = orders.map((order) => {
-        if (order.id === responseData.id) {
-          return { ...order, orderStatus: responseData.orderStatus }
-        }
-        return order
-      })
 
-      setOrders(updatedOrders)
+      setOrders(
+        orders.map((o) =>
+          o.id === orderId ? { ...o, orderStatus: order.orderStatus } : o
+        )
+      )
     } catch (error) {
       if (error instanceof AxiosError) {
         const { responseMessage }: BaseResponseInterface = error.response?.data
@@ -104,25 +102,22 @@ export const OrderModule: React.FC = () => {
   }, [currentPage])
 
   return (
-    <div className="flex flex-col items-center py-8 min-h-screen container mx-auto p-4 ">
-      <h1 className="text-2xl font-bold mb-4">Orders</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-teal-500 dark:text-teal-400">
-        {orders.map((order) => (
-          <OrderDetail
-            order={order}
-            onAccept={handleAccept}
-            onReject={handleReject}
-            key={order.id}
-          />
-        ))}
-      </div>
-      {pagination && pagination.records !== 0 && (
-        <Pagination
-          currentPage={currentPage}
-          handlePageChange={handlePageChange}
-          pagination={pagination}
+    <>
+      <div className="flex flex-col items-center py-2 min-h-screen container mx-auto p-4">
+        <h1 className="text-2xl font-bold mb-4">Request Orders</h1>
+        <OrderTable
+          orders={orders}
+          onAccept={handleAccept}
+          onReject={handleReject}
         />
-      )}
-    </div>
+        {pagination && pagination.records !== 0 && (
+          <Pagination
+            currentPage={currentPage}
+            handlePageChange={handlePageChange}
+            pagination={pagination}
+          />
+        )}
+      </div>
+    </>
   )
 }
