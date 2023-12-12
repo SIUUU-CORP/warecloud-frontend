@@ -37,11 +37,13 @@ const Navbar: React.FC = () => {
           />
         )}
 
-        <CustomLink
-          href="/profile"
-          title="Profile"
-          className="mx-2 text-teal-600 text-xl"
-        />
+        {!!user ? (
+          <CustomLink
+            href="/profile"
+            title="Profile"
+            className="mx-2 text-teal-600 text-xl"
+          />
+        ) : null}
       </nav>
       {!!user ? (
         <Link href="/">
