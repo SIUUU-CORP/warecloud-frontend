@@ -129,7 +129,12 @@ export const FormSection: React.FC = () => {
         </ModalBody>
 
         <ModalFooter>
-          <Button type="submit" colorScheme="blue" mr={3}>
+          <Button
+            isDisabled={price < 0 || weight < 0 || stock < 1}
+            type="submit"
+            colorScheme="blue"
+            mr={3}
+          >
             Save
           </Button>
           <Button colorScheme="red" onClick={handleModal}>
